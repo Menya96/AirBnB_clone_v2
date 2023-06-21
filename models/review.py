@@ -3,7 +3,9 @@
 from sqlalchemy.ext.declarative import declarative_base
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey
-from models import storage_type
+import os
+
+storage_type = os.getenv('HBNB_TYPE_STORAGE')
 
 
 class Review(BaseModel, Base):

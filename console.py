@@ -166,7 +166,7 @@ class HBNBCommand(cmd.Cmd):
         print("[Usage]: create <className>\n")
 
     def do_show(self, args):
-        """ Method to show an individual object """
+        '''""" Method to show an individual object """
         new = args.partition(" ")
         c_name = new[0]
         c_id = new[2]
@@ -191,9 +191,9 @@ class HBNBCommand(cmd.Cmd):
             obj = storage.get(HBNBCommand.classes[c_name], c_id)
             print(obj)
         except Exception:
-            print("** no instance found **")
+            print("** no instance found **")'''
 
-        '''""" Method to show an individual object """
+        """ Method to show an individual object """
         new = args.partition(" ")
         c_name = new[0]
         c_id = new[2]
@@ -216,9 +216,9 @@ class HBNBCommand(cmd.Cmd):
 
         key = c_name + "." + c_id
         try:
-            print(storage._FileStorage__objects[key])
+            print(storage.all()[key])
         except KeyError:
-            print("** no instance found **")'''
+            print("** no instance found **")
 
     def help_show(self):
         """ Help information for the show command """
@@ -258,7 +258,7 @@ class HBNBCommand(cmd.Cmd):
         print("Destroys an individual instance of a class")
         print("[Usage]: destroy <className> <objectId>\n")
 
-    def do_all(self, args):
+    '''def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
         if args:
             args = args.split(' ')[0]  # remove possible trailing args
@@ -275,9 +275,9 @@ class HBNBCommand(cmd.Cmd):
             return
 
         print_list = [str(obj) for obj in objects.values()]
-        print(print_list)
+        print(print_list)'''
 
-    '''def do_all(self, args):
+    def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
         print_list = []
 
@@ -286,14 +286,14 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
 
-        print(print_list)'''
+        print(print_list)
 
     def help_all(self):
         """ Help information for the all command """

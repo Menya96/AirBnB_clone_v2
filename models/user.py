@@ -7,7 +7,9 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from models.place import Place
 from models.review import Review
-from models import storage_type
+import os
+
+storage_type = os.getenv('HBNB_TYPE_STORAGE')
 
 
 class User(BaseModel, Base):

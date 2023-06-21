@@ -6,7 +6,9 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Table, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
 import models
-from models import storage_type
+import os
+
+storage_type = os.getenv('HBNB_TYPE_STORAGE')
 
 
 place_amenity = Table("place_amenity", Base.metadata,

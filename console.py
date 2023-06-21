@@ -187,11 +187,38 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
 
+        try:
+            obj = storage.get(HBNBCommand.classes[c_name], c_id)
+            print(obj)
+        except Exception:
+            print("** no instance found **")
+
+        '''""" Method to show an individual object """
+        new = args.partition(" ")
+        c_name = new[0]
+        c_id = new[2]
+
+        # guard against trailing args
+        if c_id and ' ' in c_id:
+            c_id = c_id.partition(' ')[0]
+
+        if not c_name:
+            print("** class name missing **")
+            return
+
+        if c_name not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+            return
+
+        if not c_id:
+            print("** instance id missing **")
+            return
+
         key = c_name + "." + c_id
         try:
             print(storage._FileStorage__objects[key])
         except KeyError:
-            print("** no instance found **")
+            print("** no instance found **")'''
 
     def help_show(self):
         """ Help information for the show command """
@@ -233,6 +260,25 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
+        if args:
+            args = args.split(' ')[0]  # remove possible trailing args
+            if args not in HBNBCommand.classes:
+                print("** class doesn't exist **")
+                return
+
+            objects = storage.all(HBNBCommand.classes[args])
+        else:
+            objects = storage.all()
+
+        if not objects:
+            print("** no instances found **")
+            return
+
+        print_list = [str(obj) for obj in objects.values()]
+        print(print_list)
+
+    '''def do_all(self, args):
+        """ Shows all objects, or all objects of a class"""
         print_list = []
 
         if args:
@@ -247,7 +293,7 @@ class HBNBCommand(cmd.Cmd):
             for k, v in storage._FileStorage__objects.items():
                 print_list.append(str(v))
 
-        print(print_list)
+        print(print_list)'''
 
     def help_all(self):
         """ Help information for the all command """

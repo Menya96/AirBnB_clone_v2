@@ -4,6 +4,8 @@ import unittest
 from models.base_model import BaseModel
 from models import storage
 import os
+from models.engine.file_storage import FileStorage
+import pep8
 
 
 class test_fileStorage(unittest.TestCase):
@@ -24,6 +26,12 @@ class test_fileStorage(unittest.TestCase):
         except:
             pass
 
+    def test_pep8_FileStorage(self):
+        """Testing pep8 style"""
+        style = pep8.StyleGuide(quiet=True)
+        p = style.check_files(['models/engine/file_storage.py'])
+        self.assertEqual(p.total_errors, 0, "fix pep8")
+
     def test_obj_list_empty(self):
         """ __objects is initially empty """
         self.assertEqual(len(storage.all()), 0)
@@ -40,6 +48,11 @@ class test_fileStorage(unittest.TestCase):
         new = BaseModel()
         temp = storage.all()
         self.assertIsInstance(temp, dict)
+        storage = FileStorage()
+        obj = storage.all()
+        self.assertIsNotNone(obj)
+        self.assertEqual(type(obj), dict)
+        self.assertIs(obj, storage._FileStorage__objects)
 
     def test_base_model_instantiation(self):
         """ File is not created on BaseModel save """

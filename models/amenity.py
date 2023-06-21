@@ -3,8 +3,9 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
-from models import storage_type
-from models.place import place_amenity
+import os
+
+storage_type = os.getenv('HBNB_TYPE_STORAGE')
 
 
 class Amenity(BaseModel, Base):
@@ -12,9 +13,6 @@ class Amenity(BaseModel, Base):
 
     __tablename__ = 'amenities'
 
-    if storage_type == 'db':
-        name = Column(String(128), nullable=False)
-    else:
-        name = ""
-
-    place_amenities = relationship("Place", secondary=place_amenity)
+    name = Column(
+            String(128), nullable=False
+            ) if storage_type == 'db' else ''

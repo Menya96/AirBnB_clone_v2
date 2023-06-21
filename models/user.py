@@ -27,9 +27,9 @@ class User(BaseModel, Base):
             'Place',
             cascade='all, delete, delete-orphan',
             backref='user'
-            )
+            ) if storage_type == 'db' else None
     reviews = relationship(
             'Review',
             cascade='all, delete, delete-orphan',
             backref='user'
-            )
+            ) if storage_type == 'db' else None

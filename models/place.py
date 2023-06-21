@@ -66,7 +66,7 @@ class Place(BaseModel, Base):
                 'Amenity',
                 secondary=place_amenity,
                 viewonly=False,
-                back_populates='place_amenity'
+                backref='place_amenities'
                 )
     else:
         @property
@@ -82,7 +82,12 @@ class Place(BaseModel, Base):
         @property
         def amenities(self):
             """ Returns list of amenity ids """
-            return self.amenity_ids
+            from models import storage
+            amenities_of_place = []
+            for value in storage.all(Amenity).values():
+                if value.id in self.amenity_ids:
+                    amenities_of_place.append(value)
+            return amenities_of_place
 
         @amenities.setter
         def amenities(self, obj=None):

@@ -10,8 +10,7 @@ from models import storage_type
 
 class City(BaseModel, Base):
     """ The city class, contains state ID and name """
-    if storage_type == 'db':
-        __tablename__ = 'cities'
+    __tablename__ = 'cities'
 
     state_id = Column(
             String(60), ForeignKey('states.id'), nullable=False
@@ -19,10 +18,8 @@ class City(BaseModel, Base):
     name = Column(
             String(128), nullable=False
             ) if storage_type == 'db' else ''
-
-    if storage_type == 'db':
-        places = relationship(
-                'Place',
-                cascade='all, delete, delete-orphan',
-                backref='cities'
-                )
+    places = relationship(
+            'Place',
+            cascade='all, delete, delete-orphan',
+            backref='cities'
+            ) if storage_type == 'db' else None

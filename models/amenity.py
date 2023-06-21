@@ -13,7 +13,4 @@ class Amenity(BaseModel, Base):
 
     name = Column(
             String(128), nullable=False
-            ) if storage_type == 'db' else ""
-    place_amenities = relationship(
-            'Place', secondary='place_amenity', viewonly=False
-            )
+            ) if storage_type == 'db' else ''

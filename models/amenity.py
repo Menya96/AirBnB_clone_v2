@@ -12,7 +12,9 @@ class Amenity(BaseModel, Base):
 
     __tablename__ = 'amenities'
 
-    name = Column(
-        String(128), nullable=False
-    ) if storage_type == 'db' else ''
+    if storage_type == 'db':
+        name = Column(String(128), nullable=False)
+    else:
+        name = ""
+
     place_amenities = relationship("Place", secondary=place_amenity)

@@ -5,14 +5,14 @@ Script that generates a .tgz archive from contents of web_static folder
 '''
 from datetime import datetime
 from fabric.api import local
-from os.path import isdir
+import os
 
 
 def do_pack():
     """generates a tgz archive"""
+    if not os.path.isdir("versions"):
+        os.mkdir("versions")
     date = datetime.now()
-    if isdir("versions") is False:
-        local("mkdir versions")
     file_name = "versions/web_static_{}{}{}{}{}{}.tgz".format(
             date.year,
             date.month,

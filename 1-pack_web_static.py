@@ -3,7 +3,6 @@
 Module: '1-pack_web_static'
 Script that generates a .tgz archive from contents of web_static folder
 '''
-
 from datetime import datetime
 from fabric.api import local
 from os.path import isdir

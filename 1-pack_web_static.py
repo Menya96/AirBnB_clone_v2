@@ -11,18 +11,12 @@ from datetime import datetime
 def do_pack():
     """Generates a .tgz archive from the contents of the web_static folder"""
 
-    # Create the versions folder if it doesn't exist
+    date = datetime.now().strftime("%Y%m%d%H%M%S")
+
     local("mkdir -p versions")
-
-    # Generate the archive name using the current date and time
-    archive_name = "web_static_{}.tgz".format(datetime.now().strftime("%Y%m%d%H%M%S"))
-
-    # Compress the web_static folder into the archive
-    result = local("tar -czvf versions/{} web_static".format(archive_name))
-
-    if result.succeeded:
-        # Return the archive path if the archive has been correctly generated
-        return "versions/{}".format(archive_name)
+    archive_name = "versions/web_static_{}.tgz".format(date)
+    local("tar -czvf {} web_static".format(archive_name))
+    if archive_name:
+        return archive_name
     else:
-        # Return None if the archive generation failed
         return None

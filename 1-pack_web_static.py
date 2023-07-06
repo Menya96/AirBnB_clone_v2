@@ -22,7 +22,10 @@ def do_pack():
             date.second
             )
     try:
+        print("Packing web_static to {}".format(file_name))
         local("tar -cvzf {} web_static".format(file_name))
+        arch_size = os.stat(file_name).st_size
+        print("web_static packed: {} -> {} Bytes".format(file_name, arch_size))
     except Exception:
         return None
     return file_name

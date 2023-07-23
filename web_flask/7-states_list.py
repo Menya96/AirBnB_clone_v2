@@ -18,6 +18,7 @@ def states_list():
     }
     return render_template('7-states_list.html', **state_dict)
 
+
 @app.teardown_appcontext
 def flask_teardown(exc):
     '''Remove the current SQLALchemy Session after each request'''

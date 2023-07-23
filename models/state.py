@@ -14,20 +14,22 @@ class State(BaseModel, Base):
     __tablename__ = 'states'
 
     name = Column(
-            String(128), nullable=False
-            ) if storage_type == 'db' else ''
+        String(128), nullable=False
+    ) if storage_type == 'db' else ''
 
     if storage_type == 'db':
         cities = relationship(
-                'City',
-                cascade='all, delete, delete-orphan',
-                backref='state'
-                )
+            'City',
+            cascade='all, delete, delete-orphan',
+            backref='state'
+        )
     else:
         @property
         def cities(self):
             """Returns the cities in this State"""
             from models import storage
+            from models.city import City
+
             cities_in_state = []
             for value in storage.all(City).values():
                 if value.state_id == self.id:

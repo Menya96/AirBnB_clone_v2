@@ -35,11 +35,19 @@ class BaseModel:
             if "updated_at" not in kwargs:
                 self.updated_at = datetime.now()
 
-    def __str__(self):
+    '''def __str__(self):
         """Returns a string representation of the instance"""
         # cls = (str(type(self)).split('.')[-1]).split('\'')[0]
         return '[{}] ({}) {}'.format(
-                self.__class__.__name__, self.id, self.__dict__)
+                self.__class__.__name__, self.id, self.__dict__)'''
+    def __str__(self):
+        """Returns a string representation of the instance"""
+        cls_name = self.__class__.__name__
+        attrs = {}
+        for attr in self.__dict__:
+            if attr != '_sa_instance_state':
+                attrs[attr] = getattr(self, attr)
+        return '[{}] ({}) {}'.format(cls_name, self.id, attrs)
 
     def save(self):
         """Updates updated_at with current time when instance is changed"""

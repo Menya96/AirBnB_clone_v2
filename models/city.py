@@ -1,27 +1,21 @@
 #!/usr/bin/python3
-""" City Module for HBNB project """
-
-from sqlalchemy.ext.declarative import declarative_base
+"""This is the city class"""
+import models
 from models.base_model import BaseModel, Base
-from sqlalchemy import String, Column, ForeignKey, Integer
+from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
-import os
-
-storage_type = os.getenv('HBNB_TYPE_STORAGE')
 
 
 class City(BaseModel, Base):
-    """ The city class, contains state ID and name """
+    """This is the class for City
+    Attributes:
+        state_id: The state id
+        name: input name
+    """
+    # initialize class for file/db storage type
     __tablename__ = 'cities'
-
-    state_id = Column(
-            String(60), ForeignKey('states.id'), nullable=False
-            ) if storage_type == 'db' else ''
-    name = Column(
-            String(128), nullable=False
-            ) if storage_type == 'db' else ''
-    places = relationship(
-            'Place',
-            cascade='all, delete, delete-orphan',
-            backref='cities'
-            ) if storage_type == 'db' else None
+    __table_args__ = (
+        {'mysql_default_charset': 'latin1'})
+    name = Column(String(128), nullable=False)
+    state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
+    places = relationship('Place', cascade='all, delete', backref='cities')

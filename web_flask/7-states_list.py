@@ -10,10 +10,9 @@ app = Flask(__name__)
 
 @app.route('/states_list', strict_slashes=False)
 def states_list():
-    """ Display a HTML page with the list of all State objects """
-    states = storage.all(State).values()
-    sorted_states = sorted(states, key=lambda x: x.name)
-    return render_template('7-states_list.html', states=sorted_states)
+    '''The states_list page.'''
+    states = storage.all("State")
+    return render_template("7-states_list.html", states=states)
 
 
 @app.teardown_appcontext
